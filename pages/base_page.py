@@ -16,6 +16,10 @@ class BasePage:
         return (WebDriverWait(self.driver, timeout)
                 .until(EC.element_to_be_clickable(locator)))
 
+    def wait_element_gone(self, locator: tuple[str, str], timeout: int = 5) -> None:
+        (WebDriverWait(self.driver, timeout)
+         .until_not(EC.visibility_of_element_located(locator)))
+
     def find_elements(self, locator: tuple[str, str], timeout: int = 10) -> list[WebElement]:
         return (WebDriverWait(self.driver, timeout)
                 .until(EC.visibility_of_all_elements_located(locator)))

@@ -2,13 +2,13 @@ import allure
 from data.urls import Urls
 from locators.recover_password_page_locators import RecoverPasswordPageLocators
 from pages.base_page import BasePage
-from selenium.webdriver.remote.webdriver import WebDriver, WebElement
+from selenium.webdriver.remote.webdriver import WebElement
 
 
 class RecoverPasswordPage(BasePage):
-    def __init__(self, driver: WebDriver):
-        super().__init__(driver)
+    def go_to_recover_password_page(self) -> None:
         self.driver_get_url(Urls.recover_password_forgot_page)
+        self.find_clickable_element(RecoverPasswordPageLocators.recover_button)
 
     @allure.step('Заполняем поле "Email"')
     def fillup_email(self, email: str) -> None:
@@ -29,3 +29,11 @@ class RecoverPasswordPage(BasePage):
     @allure.step('Ждем обновления страницы после указания почты')
     def wait_change_forgot_page(self) -> None:
         self.wait_change_url(Urls.recover_password_forgot_page)
+
+    def is_forgot_password_page_opened(self) -> bool:
+        return (self.current_url() == Urls.recover_password_forgot_page and
+                self.find_clickable_element(RecoverPasswordPageLocators.recover_button) is not None)
+
+    def is_reset_password_page_opened(self) -> bool:
+        return (self.current_url() == Urls.recover_password_reset_page and
+                self.find_clickable_element(RecoverPasswordPageLocators.save_button) is not None)
