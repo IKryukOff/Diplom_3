@@ -1,5 +1,6 @@
 allure-pytest==2.14.0
 faker==37.1.0
 pytest==8.3.5
+pytest-rerunfailures==15.1
 selenium==4.31.0
 pydantic==2.11.3
