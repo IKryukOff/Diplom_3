@@ -1,5 +1,5 @@
 import allure
-from data import Urls, drag_and_drop_js_script
+from data import INGREDIENT_NAMES, Urls, drag_and_drop_js_script
 from locators.main_page_locators import IngredientsLocators, MainPageLocators
 from pages.base_page import BasePage
 
@@ -50,8 +50,24 @@ class MainPage(BasePage):
     def click_order_button(self) -> None:
         self.click_on_element(MainPageLocators.order_button)
 
+    @allure.step('Получить номер созданного заказа')
+    def get_created_order_id(self) -> int:
+        return int(self.find_visible_element(MainPageLocators.order_id).text)
+
+    @allure.step('Кликаем по крестику окна созданного заказа')
+    def click_close_order_detail(self) -> None:
+        self.click_on_element(MainPageLocators.order_detail_close_button)
+
+    def create_order_and_get_id(self) -> int:
+        self.click_constructor_header()
+        self.move_ingredient_to_basket(INGREDIENT_NAMES[0])
+        self.click_order_button()
+        order_id = self.get_created_order_id()
+        self.click_close_order_detail()
+        return order_id
+
     def is_order_accepted(self) -> bool:
-        return self.find_presence_element(IngredientsLocators.order_start_status).is_displayed()
+        return self.find_presence_element(MainPageLocators.order_start_status).is_displayed()
 
     def ingredient_details_is_displayed(self) -> bool:
         return self.find_presence_element(
