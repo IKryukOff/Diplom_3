@@ -62,3 +62,14 @@ class TestMainPage:
         count_before = main_page.get_ingredient_count(ingredient_name)
         main_page.move_ingredient_to_basket(ingredient_name)
         assert main_page.get_ingredient_count(ingredient_name) > count_before
+
+    @allure.sub_suite('Тестирование создания заказа авторизованным пользователем')
+    @allure.title('Проверка создания заказа авторизованным пользователем по кнопке Оформить заказ')
+    @allure.description('При условии авторицации открываем главную страницу -> перемещаем '
+                        'ингредиент в корзину -> нажимаем на Оформить заказ -> Ожидаем сообщение '
+                        'со статусом заказа')
+    def test_create_order_by_authed_user_order_accepted(self, login: WebDriver) -> None:
+        main_page = MainPage(login)
+        main_page.move_ingredient_to_basket(INGREDIENT_NAMES[0])
+        main_page.click_order_button()
+        assert main_page.is_order_accepted()

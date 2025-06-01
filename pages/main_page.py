@@ -46,6 +46,13 @@ class MainPage(BasePage):
         # ActionChains(self.driver).drag_and_drop(source, target).perform()
         self.driver.execute_script(drag_and_drop_js_script, source, target)
 
+    @allure.step('Кликаем по элементу "Оформить заказ"')
+    def click_order_button(self) -> None:
+        self.click_on_element(MainPageLocators.order_button)
+
+    def is_order_accepted(self) -> bool:
+        return self.find_presence_element(IngredientsLocators.order_start_status).is_displayed()
+
     def ingredient_details_is_displayed(self) -> bool:
         return self.find_presence_element(
             IngredientsLocators.ingredient_details_text).is_displayed()

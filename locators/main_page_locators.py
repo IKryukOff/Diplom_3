@@ -28,3 +28,4 @@ class IngredientsLocators:
     close_details_button = (
         By.XPATH, './/h2[text()="Детали ингредиента"]/../../button[contains(@class,"close")]')
     ingredient_basket = (By.XPATH, './/ul[contains(@class,"basket__list")]')
+    order_start_status = (By.XPATH, './/p[text()="Ваш заказ начали готовить"]')
