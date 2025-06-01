@@ -1,5 +1,5 @@
 import allure
-from data.urls import Urls
+from data import Urls
 from locators.main_page_locators import MainPageLocators, IngredientsLocators
 from pages.base_page import BasePage
 

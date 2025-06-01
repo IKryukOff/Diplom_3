@@ -1,6 +1,6 @@
 import allure
 import pytest
-from data.ingredients import ingredient_names
+from data import INGREDIENT_NAMES
 from pages.main_page import MainPage
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -29,7 +29,7 @@ class TestMainPage:
     @allure.sub_suite('Тестирование открытия Деталей инредиента')
     @allure.title('Проверка открытия информации об ингредиенте после клика на него')
     @allure.description('Открываем шлавную страницу, кликаем на ингредент')
-    @pytest.mark.parametrize('ingredient_name', ingredient_names)
+    @pytest.mark.parametrize('ingredient_name', INGREDIENT_NAMES)
     def test_click_ingredient_details_show(self, driver: WebDriver,
                                            ingredient_name: str) -> None:
         main_page = MainPage(driver)
@@ -40,7 +40,7 @@ class TestMainPage:
     @allure.sub_suite('Тестирование закрытия окна Деталей инредиента')
     @allure.title('Проверка закрытия информации об ингредиенте после клика на кнопку крестика')
     @allure.description('Открываем шлавную страницу -> кликаем на ингредент -> кликаем на крестик')
-    @pytest.mark.parametrize('ingredient_name', ingredient_names)
+    @pytest.mark.parametrize('ingredient_name', INGREDIENT_NAMES)
     def test_click_close_ingredient_details_closed(self, driver: WebDriver,
                                                    ingredient_name: str) -> None:
         main_page = MainPage(driver)

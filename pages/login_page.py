@@ -1,6 +1,5 @@
 import allure
-from data.urls import Urls
-from data.user import User
+from data import Urls, User
 from locators.login_page_locators import LoginPageLocators
 from pages.base_page import BasePage
 

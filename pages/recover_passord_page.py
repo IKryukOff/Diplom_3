@@ -1,5 +1,5 @@
 import allure
-from data.urls import Urls
+from data import Urls
 from locators.recover_password_page_locators import RecoverPasswordPageLocators
 from pages.base_page import BasePage
 from selenium.webdriver.remote.webdriver import WebElement
