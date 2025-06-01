@@ -19,7 +19,7 @@ class TestMainPage:
 
     @allure.sub_suite('Тестирование перехода перехода на Ленту Заказов')
     @allure.title('Проверка перехода на Ленту Заказов бургера по клику на кнопку "Лента Заказов"')
-    @allure.description('Открываем шлавную страницу, кликаем на "Лента Заказов"')
+    @allure.description('Открываем главную страницу, кликаем на "Лента Заказов"')
     def test_click_order_feed_header_order_feed_show(self, driver: WebDriver) -> None:
         main_page = MainPage(driver)
         main_page.go_to_main_page()
@@ -28,7 +28,7 @@ class TestMainPage:
 
     @allure.sub_suite('Тестирование открытия Деталей инредиента')
     @allure.title('Проверка открытия информации об ингредиенте после клика на него')
-    @allure.description('Открываем шлавную страницу, кликаем на ингредент')
+    @allure.description('Открываем главную страницу, кликаем на ингредент')
     @pytest.mark.parametrize('ingredient_name', INGREDIENT_NAMES)
     def test_click_ingredient_details_show(self, driver: WebDriver,
                                            ingredient_name: str) -> None:
@@ -39,7 +39,7 @@ class TestMainPage:
 
     @allure.sub_suite('Тестирование закрытия окна Деталей инредиента')
     @allure.title('Проверка закрытия информации об ингредиенте после клика на кнопку крестика')
-    @allure.description('Открываем шлавную страницу -> кликаем на ингредент -> кликаем на крестик')
+    @allure.description('Открываем главную страницу -> кликаем на ингредент -> кликаем на крестик')
     @pytest.mark.parametrize('ingredient_name', INGREDIENT_NAMES)
     def test_click_close_ingredient_details_closed(self, driver: WebDriver,
                                                    ingredient_name: str) -> None:
@@ -48,3 +48,17 @@ class TestMainPage:
         main_page.click_on_ingredient(ingredient_name)
         main_page.click_close_details_button()
         assert main_page.ingredient_details_is_displayed() is False
+
+    @allure.sub_suite('Тестирование изменение каунтера ингредиента')
+    @allure.title('Проверка того, что при добавлении ингредиента в заказ, увеличивается каунтер '
+                  'данного ингредиента')
+    @allure.description('Открываем главную страницу -> перемещаем ингредиент в корзину -> '
+                        'сравниваем значения каунтера ингредиента')
+    @pytest.mark.parametrize('ingredient_name', INGREDIENT_NAMES)
+    def test_drag_and_drop_ingredient_counter_changed(self, driver: WebDriver,
+                                                      ingredient_name: str) -> None:
+        main_page = MainPage(driver)
+        main_page.go_to_main_page()
+        count_before = main_page.get_ingredient_count(ingredient_name)
+        main_page.move_ingredient_to_basket(ingredient_name)
+        assert main_page.get_ingredient_count(ingredient_name) > count_before

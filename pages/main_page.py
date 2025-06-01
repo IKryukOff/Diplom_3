@@ -1,6 +1,6 @@
 import allure
-from data import Urls
-from locators.main_page_locators import MainPageLocators, IngredientsLocators
+from data import Urls, drag_and_drop_js_script
+from locators.main_page_locators import IngredientsLocators, MainPageLocators
 from pages.base_page import BasePage
 
 
@@ -33,6 +33,18 @@ class MainPage(BasePage):
     def click_close_details_button(self) -> None:
         self.click_on_element(IngredientsLocators.close_details_button)
         self.wait_element_to_be_invisible(IngredientsLocators.ingredient_details_text)
+
+    @allure.step("Получить значение каунтера для ингредиента {name}")
+    def get_ingredient_count(self, name: str) -> int:
+        return int(self.find_visible_element(IngredientsLocators.ingredient_counter(name)).text)
+
+    @allure.step("Добавить ингредиент {name} в корзину")
+    def move_ingredient_to_basket(self, name: str) -> None:
+        source = self.find_visible_element(IngredientsLocators.ingredient_item(name))
+        target = self.find_visible_element(IngredientsLocators.ingredient_basket)
+        # ActionChains drag_and_drop на Firefox не работает, поэтому используем js скрипт
+        # ActionChains(self.driver).drag_and_drop(source, target).perform()
+        self.driver.execute_script(drag_and_drop_js_script, source, target)
 
     def ingredient_details_is_displayed(self) -> bool:
         return self.find_presence_element(
