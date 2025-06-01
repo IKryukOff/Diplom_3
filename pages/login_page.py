@@ -32,7 +32,7 @@ class LoginPage(BasePage):
         self.fillup_login(User.login)
         self.fillup_password(User.password)
         self.click_login_button()
-        self.wait_element_gone(LoginPageLocators.login_button)
+        self.wait_element_to_be_invisible(LoginPageLocators.login_button)
 
     def is_login_page_opened(self) -> bool:
         return (self.current_url() == Urls.login_page and

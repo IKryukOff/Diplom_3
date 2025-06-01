@@ -1,4 +1,5 @@
 import allure
+from locators.base_page_locators import BasePageLocators
 from selenium.webdriver.remote.webdriver import WebDriver, WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -16,16 +17,20 @@ class BasePage:
         return (WebDriverWait(self.driver, timeout)
                 .until(EC.element_to_be_clickable(locator)))
 
-    def wait_element_gone(self, locator: tuple[str, str], timeout: int = 5) -> None:
+    def wait_element_to_be_invisible(self, locator: tuple[str, str], timeout: int = 5) -> None:
         (WebDriverWait(self.driver, timeout)
-         .until_not(EC.visibility_of_element_located(locator)))
+         .until(EC.invisibility_of_element_located(locator)))
 
     def find_elements(self, locator: tuple[str, str], timeout: int = 10) -> list[WebElement]:
         return (WebDriverWait(self.driver, timeout)
                 .until(EC.visibility_of_all_elements_located(locator)))
 
     def click_on_element(self, locator: tuple[str, str]) -> None:
+        # Иногда в Firefox не происходит клик по причине перекрытия его елементом загрузки страницы
+        # Поэтому ждем пока он станет invisible
+        self.wait_element_to_be_invisible(BasePageLocators.loading_img)
         self.find_clickable_element(locator).click()
+        self.wait_element_to_be_invisible(BasePageLocators.loading_img)
 
     def send_keys_into_field(self, locator: tuple[str, str], input_value: str) -> None:
         self.find_element(locator).send_keys(input_value)
