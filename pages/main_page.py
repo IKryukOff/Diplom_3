@@ -25,9 +25,9 @@ class MainPage(BasePage):
     def click_order_feed_header(self) -> None:
         self.click_on_element(MainPageLocators.order_feed_text)
 
-    @allure.step("Кликаем по ингредиенту")
-    def click_on_ingredient(self, ingredient_locator: tuple[str, str]) -> None:
-        self.click_on_element(ingredient_locator)
+    @allure.step("Кликаем по ингредиенту {name}")
+    def click_on_ingredient(self, name: str) -> None:
+        self.click_on_element(IngredientsLocators.ingredient_item(name))
 
     @allure.step("Кликаем по кнопке закрытия Деталей ингредиента")
     def click_close_details_button(self) -> None:

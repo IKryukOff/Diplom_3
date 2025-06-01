@@ -1,8 +1,8 @@
 import allure
 import pytest
+from data.ingredients import ingredient_names
 from pages.main_page import MainPage
 from selenium.webdriver.remote.webdriver import WebDriver
-from locators.main_page_locators import IngredientsLocators
 
 
 @allure.parent_suite('Тестирование UI сервиса Stellar Burgers')
@@ -29,26 +29,22 @@ class TestMainPage:
     @allure.sub_suite('Тестирование открытия Деталей инредиента')
     @allure.title('Проверка открытия информации об ингредиенте после клика на него')
     @allure.description('Открываем шлавную страницу, кликаем на ингредент')
-    @pytest.mark.parametrize('ingredient_locator', [IngredientsLocators.bun_r2_d3,
-                                                    IngredientsLocators.sauce_spicy_x,
-                                                    IngredientsLocators.filling_cheese])
+    @pytest.mark.parametrize('ingredient_name', ingredient_names)
     def test_click_ingredient_details_show(self, driver: WebDriver,
-                                           ingredient_locator: tuple[str, str]) -> None:
+                                           ingredient_name: str) -> None:
         main_page = MainPage(driver)
         main_page.go_to_main_page()
-        main_page.click_on_ingredient(ingredient_locator)
+        main_page.click_on_ingredient(ingredient_name)
         assert main_page.ingredient_details_is_displayed()
 
     @allure.sub_suite('Тестирование закрытия окна Деталей инредиента')
     @allure.title('Проверка закрытия информации об ингредиенте после клика на кнопку крестика')
     @allure.description('Открываем шлавную страницу -> кликаем на ингредент -> кликаем на крестик')
-    @pytest.mark.parametrize('ingredient_locator', [IngredientsLocators.bun_r2_d3,
-                                                    IngredientsLocators.sauce_spicy_x,
-                                                    IngredientsLocators.filling_cheese])
+    @pytest.mark.parametrize('ingredient_name', ingredient_names)
     def test_click_close_ingredient_details_closed(self, driver: WebDriver,
-                                                   ingredient_locator: tuple[str, str]) -> None:
+                                                   ingredient_name: str) -> None:
         main_page = MainPage(driver)
         main_page.go_to_main_page()
-        main_page.click_on_ingredient(ingredient_locator)
+        main_page.click_on_ingredient(ingredient_name)
         main_page.click_close_details_button()
         assert main_page.ingredient_details_is_displayed() is False

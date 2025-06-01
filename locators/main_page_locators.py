@@ -16,9 +16,13 @@ class MainPageLocators:
 
 
 class IngredientsLocators:
-    bun_r2_d3 = (By.XPATH, './/p[text()="Флюоресцентная булка R2-D3"]/parent::a[@draggable]')
-    sauce_spicy_x = (By.XPATH, './/p[text()="Соус Spicy-X"]/parent::a[@draggable]')
-    filling_cheese = (By.XPATH, './/p[text()="Сыр с астероидной плесенью"]/parent::a[@draggable]')
+    @staticmethod
+    def ingredient_item(name: str) -> tuple[str, str]:
+        return (By.XPATH, f'.//p[text()="{name}"]/parent::a[@draggable]')
+
+    @staticmethod
+    def ingredient_counter(name: str) -> tuple[str, str]:
+        return (By.XPATH, f'.//p[text()="{name}"]/../*/p[contains(@class,"num")]')
 
     ingredient_details_text = (By.XPATH, './/h2[text()="Детали ингредиента"]')
     close_details_button = (
