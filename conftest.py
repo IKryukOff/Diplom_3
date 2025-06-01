@@ -19,7 +19,8 @@ def driver(request) -> Generator[WebDriver, Any, None]:
 
 
 @pytest.fixture()
-def login(driver: WebDriver) -> None:
+def login(driver: WebDriver) -> WebDriver:
     login_page = LoginPage(driver)
     login_page.go_to_login_page()
     login_page.login()
+    return driver
