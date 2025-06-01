@@ -23,7 +23,7 @@ class ProfilePage(BasePage):
 
     def is_order_history_opened(self) -> bool:
         return (self.current_url() == Urls.order_hstory_page and
-                self.find_element(ProfilePageLocators.order_history_div) is not None)
+                self.find_visible_element(ProfilePageLocators.order_history_div) is not None)
 
     def is_profile_page_opened(self) -> bool:
         return (self.current_url() == Urls.profile_page and

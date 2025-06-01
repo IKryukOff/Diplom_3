@@ -24,7 +24,7 @@ class RecoverPasswordPage(BasePage):
 
     @allure.step('Находим активное поле ввода')
     def find_active_input(self) -> WebElement:
-        return self.find_element(RecoverPasswordPageLocators.active_input_label)
+        return self.find_visible_element(RecoverPasswordPageLocators.active_input_label)
 
     @allure.step('Ждем обновления страницы после указания почты')
     def wait_change_forgot_page(self) -> None:

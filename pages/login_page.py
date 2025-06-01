@@ -28,7 +28,7 @@ class LoginPage(BasePage):
 
     @allure.step('Выполняем авторизацию пользователя')
     def login(self):
-        self.find_element(LoginPageLocators.title_text)
+        self.find_visible_element(LoginPageLocators.title_text)
         self.fillup_login(User.login)
         self.fillup_password(User.password)
         self.click_login_button()
@@ -36,4 +36,4 @@ class LoginPage(BasePage):
 
     def is_login_page_opened(self) -> bool:
         return (self.current_url() == Urls.login_page and
-                self.find_element(LoginPageLocators.login_button) is not None)
+                self.find_visible_element(LoginPageLocators.login_button) is not None)
